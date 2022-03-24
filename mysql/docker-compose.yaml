@@ -1,0 +1,23 @@
+version: '3.2'
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    networks:
+      - database
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: jcx
+      MYSQL_PASS: root
+    volumes:
+      - "./data:/var/lib/mysql"
+      - "./conf/my.cnf:/etc/my.cnf"
+      # 数据库还原目录 可将需要还原的sql文件放在这里
+      - "./init:/docker-entrypoint-initdb.d/"
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: bridge
+networks:
+  database:
