@@ -5,6 +5,11 @@ services:
     restart: always
     networks:
       - database
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: bridge
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: jcx
@@ -14,10 +19,6 @@ services:
       - "./conf/my.cnf:/etc/my.cnf"
       # 数据库还原目录 可将需要还原的sql文件放在这里
       - "./init:/docker-entrypoint-initdb.d/"
-    ports:
-      - target: 3306
-        published: 3306
-        protocol: tcp
-        mode: bridge
+
 networks:
   database:

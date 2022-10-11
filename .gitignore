@@ -244,3 +244,4 @@ $RECYCLE.BIN/
 *.lnk
 
 /mysql/data/
+/redis/data/
