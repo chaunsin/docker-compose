@@ -9,7 +9,7 @@ services:
       - target: 3306
         published: 3306
         protocol: tcp
-        mode: bridge
+        mode: host
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: jcx
@@ -19,6 +19,13 @@ services:
       - "./conf/my.cnf:/etc/my.cnf"
       # 数据库还原目录 可将需要还原的sql文件放在这里
       - "./init:/docker-entrypoint-initdb.d/"
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
 
 networks:
   database:

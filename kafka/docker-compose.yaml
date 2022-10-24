@@ -20,6 +20,13 @@ services:
       - type: volume
         source: sksingle-kmultiple_zoo1-log
         target: /datalog
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
 
   kafka1:
     image: confluentinc/cp-kafka:6.2.1
@@ -39,6 +46,13 @@ services:
         target: /var/lib/kafka/data
     depends_on:
       - zoo1
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
 
   kafka2:
     image: confluentinc/cp-kafka:6.2.1
@@ -58,6 +72,13 @@ services:
         target: /var/lib/kafka/data
     depends_on:
       - zoo1
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
 
   kafka3:
     image: confluentinc/cp-kafka:6.2.1
@@ -77,6 +98,13 @@ services:
         target: /var/lib/kafka/data
     depends_on:
       - zoo1
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
 
 volumes:
   sksingle-kmultiple_kafka1-data:

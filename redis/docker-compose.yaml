@@ -15,6 +15,13 @@ services:
     command: redis-server /etc/redis/redis.conf
     # 使用该参数container内的root拥有真正的root权限。否则，container内的root只是外部的一个普通用户权限
     privileged: true
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
 
 #  # redis命令行,可以酌情使用,其实可以不用在启动一个服务,在执行命令行时直接进入到redis-server执行cli是一样的
 #  redis-cli:
