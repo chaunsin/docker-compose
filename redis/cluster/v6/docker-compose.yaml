@@ -4,10 +4,10 @@ services:
   redis-cluster:
     image: ${IMAGE}
     #command: redis-cli -a root --cluster create redis-node-1:6379 redis-node-2:6379 redis-node-3:6379 redis-node-4:6379 redis-node-5:6379 redis-node-6:6379 --cluster-replicas 1 --cluster-yes
-    command: "redis-cli -a root --cluster create 192.168.0.7:6379 192.168.0.2:6379 192.168.0.3:6379 192.168.0.4:6379 192.168.0.5:6379 192.168.0.6:6379 --cluster-replicas 1 --cluster-yes"
+    command: "redis-cli -a root --cluster create 192.168.0.1:6379 192.168.0.2:6379 192.168.0.3:6379 192.168.0.4:6379 192.168.0.5:6379 192.168.0.6:6379 --cluster-replicas 1 --cluster-yes"
     networks:
       redis-net:
-        ipv4_address: 192.168.0.8
+        ipv4_address: 192.168.0.7
     depends_on:
       - redis-node-1
       - redis-node-2
@@ -25,7 +25,7 @@ services:
     privileged: true
     networks:
       redis-net:
-        ipv4_address: 192.168.0.7
+        ipv4_address: 192.168.0.1
     ports:
       - "6479:6379"
     #      - "16479:16379"
@@ -130,8 +130,6 @@ services:
     container_name: redis-node-6
     command: redis-server /etc/redis/redis.conf
     privileged: true
-    #    networks:
-    #      - redis-net
     networks:
       redis-net:
         ipv4_address: 192.168.0.6
