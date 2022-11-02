@@ -1,6 +1,6 @@
 # redis
 
-3主3从模式
+搭建集群模式3主3从模式,登录账号root
 
 # 镜像
 
@@ -19,6 +19,24 @@ docker pull redis:latest
 ```shell
 docker pull redis:5.0.14-alpine
 ```
+
+# 配置
+
+redis不同版本有不同的配置,因此在实际使用当中根据自己的情况进行调整,不同版本的配置下载地址：
+https://download.redis.io/releases/
+下载对应版本之后解压redis-x.x.x.tar.gz文件,在根目录中有`redis.conf`文件,直接拷贝到当前项目目录即可
+
+另外配置中需要更改绑定方式,详情看配置文件中的标注,以下是针对6.2.7版本配置文件
+
+- protected-mode 98行左右
+- daemonize 263行左右
+- masterauth 490行左右
+- requirepass 907行左右
+- cluster-enabled 1391行左右
+- cluster-config-file 1399行左右
+- cluster-node-timeout 1409行左右
+- cluster-announce-port 1561行左右
+- cluster-announce-bus-port 1562行左右
 
 # 问提
 
@@ -51,25 +69,12 @@ https://blog.csdn.net/guotianqing/article/details/119778684
 ./redis-cli -c -a root
 ```
 
-# 配置
+### 4. 添加集群命令中`--cluster-replicas 1`得作用
 
-redis不同版本有不同的配置,因此在实际使用当中根据自己的情况进行调整,不同版本的配置下载地址：
-https://download.redis.io/releases/
-下载对应版本之后解压redis-x.x.x.tar.gz文件,在根目录中有`redis.conf`文件,直接拷贝到当前项目目录即可
-
-另外配置中需要更改绑定方式,详情看配置文件中的标注,以下是针对6.2.7版本配置文件
-
-- protected-mode 98行左右
-- daemonize 263行左右
-- masterauth 490行左右
-- requirepass 907行左右
-- cluster-enabled 1391行左右
-- cluster-config-file 1399行左右
-- cluster-node-timeout 1409行左右
-- cluster-announce-port 1561行左右
-- cluster-announce-bus-port 1562行左右
+相当于指定从节点有几个,比如我搭建了6个节点,--cluster-replicas设置为1时,则其中三个作为主节点,三个作为从节点。如果设置为0则代表6点节点都是主节点。
 
 # 参考
 
 https://zhuanlan.zhihu.com/p/551670740
 https://www.cnblogs.com/tanghaorong/p/14339880.html
+https://www.cnblogs.com/AD-milk/p/16200539.html
