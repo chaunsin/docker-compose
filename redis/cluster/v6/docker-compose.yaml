@@ -1,0 +1,167 @@
+version: '3.7'
+services:
+  # 用于创建集群关系
+  redis-cluster:
+    image: ${IMAGE}
+    #command: redis-cli -a root --cluster create redis-node-1:6379 redis-node-2:6379 redis-node-3:6379 redis-node-4:6379 redis-node-5:6379 redis-node-6:6379 --cluster-replicas 1 --cluster-yes
+    command: "redis-cli -a root --cluster create 192.168.0.7:6379 192.168.0.2:6379 192.168.0.3:6379 192.168.0.4:6379 192.168.0.5:6379 192.168.0.6:6379 --cluster-replicas 1 --cluster-yes"
+    networks:
+      redis-net:
+        ipv4_address: 192.168.0.8
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+      - redis-node-4
+      - redis-node-5
+      - redis-node-6
+
+  redis-node-1:
+    image: ${IMAGE}
+    restart: "always"
+    container_name: redis-node-1
+    command: redis-server /etc/redis/redis.conf
+    # 使用该参数container内的root拥有真正的root权限。否则，container内的root只是外部的一个普通用户权限
+    privileged: true
+    networks:
+      redis-net:
+        ipv4_address: 192.168.0.7
+    ports:
+      - "6479:6379"
+    #      - "16479:16379"
+    volumes:
+      - ./6379/conf/redis.conf:/etc/redis/redis.conf
+      - ./6379/data:/data
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
+
+  redis-node-2:
+    image: ${IMAGE}
+    restart: "always"
+    container_name: redis-node-2
+    command: redis-server /etc/redis/redis.conf
+    privileged: true
+    networks:
+      redis-net:
+        ipv4_address: 192.168.0.2
+    ports:
+      - "6380:6379"
+    #      - "16380:16379"
+    volumes:
+      - ./6380/conf/redis.conf:/etc/redis/redis.conf
+      - ./6380/data:/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "3"
+
+  redis-node-3:
+    image: ${IMAGE}
+    restart: "always"
+    container_name: redis-node-3
+    command: redis-server /etc/redis/redis.conf
+    privileged: true
+    networks:
+      redis-net:
+        ipv4_address: 192.168.0.3
+    ports:
+      - "6381:6379"
+    #      - "16381:16379"
+    volumes:
+      - ./6381/conf/redis.conf:/etc/redis/redis.conf
+      - ./6381/data:/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "3"
+
+  redis-node-4:
+    image: ${IMAGE}
+    restart: "always"
+    container_name: redis-node-4
+    command: redis-server /etc/redis/redis.conf
+    privileged: true
+    networks:
+      redis-net:
+        ipv4_address: 192.168.0.4
+    ports:
+      - "6382:6379"
+    #      - "16382:16379"
+    volumes:
+      - ./6382/conf/redis.conf:/etc/redis/redis.conf
+      - ./6382/data:/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "3"
+
+  redis-node-5:
+    image: ${IMAGE}
+    restart: "always"
+    container_name: redis-node-5
+    command: redis-server /etc/redis/redis.conf
+    privileged: true
+    networks:
+      redis-net:
+        ipv4_address: 192.168.0.5
+    ports:
+      - "6383:6379"
+    #      - "16383:16379"
+    volumes:
+      - ./6383/conf/redis.conf:/etc/redis/redis.conf
+      - ./6383/data:/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "3"
+
+  redis-node-6:
+    image: ${IMAGE}
+    restart: "always"
+    container_name: redis-node-6
+    command: redis-server /etc/redis/redis.conf
+    privileged: true
+    #    networks:
+    #      - redis-net
+    networks:
+      redis-net:
+        ipv4_address: 192.168.0.6
+    ports:
+      - "6384:6379"
+    #      - "16384:16379"
+    volumes:
+      - ./6384/conf/redis.conf:/etc/redis/redis.conf
+      - ./6384/data:/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200m"
+        max-file: "3"
+
+#  # redis命令行,可以酌情使用,其实可以不用在启动一个服务,在执行命令行时直接进入到redis-server执行cli是一样的
+#  redis-cli:
+#    image: redis:6.2.7-alpine3.16
+#    restart: "always"
+#    container_name: redis-cli
+#    command: /bin/sh -c 'redis-cli -h redis-server -p 6379 ping; while true; do sleep 20221011; done'
+#    privileged: true
+#    networks:
+#      - redis-net
+
+networks:
+  redis-net:
+    name: redis-net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/24

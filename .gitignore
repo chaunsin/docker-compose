@@ -243,5 +243,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-/mysql/data/
-/redis/data/
+# 本项目
+data
