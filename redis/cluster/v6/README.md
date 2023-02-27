@@ -8,7 +8,7 @@
 
 https://hub.docker.com/_/redis/tags
 
-拉取正常最新版本
+拉取最新常规版本镜像
 
 ```shell
 docker pull redis:latest
@@ -42,7 +42,7 @@ https://download.redis.io/releases/
 
 ### 1.哪些节点是主节点哪些是从节点？
 
-默认情况下启动主从节点是随机不固定自动分配的,等需要服务启动之后才能确定节点关系,可使用命令行查看集群先关信息:
+默认情况下启动主从节点是随机不固定自动分配的,等需要服务启动之后才能确定节点关系,可使用命令行查看集群相关信息:
 
 ```shell
 ./redis-cli --cluster check 127.0.0.0:
@@ -59,7 +59,7 @@ https://blog.csdn.net/guotianqing/article/details/119778684
 
 ### 2.Waiting for the cluster to join ......
 
-原因是没有配置`cluster-announce-bus-port`端口,需要再配置文件中增加端口
+原因是没有配置`cluster-announce-bus-port`端口,需要在配置文件中增加端口
 
 ### 3.(error) MOVED 15692 192.168.0.3:6379
 
@@ -69,9 +69,9 @@ https://blog.csdn.net/guotianqing/article/details/119778684
 ./redis-cli -c -a root
 ```
 
-### 4. 添加集群命令中`--cluster-replicas 1`得作用
+### 4. 添加集群命令中`--cluster-replicas 1`选项得作用
 
-相当于指定从节点有几个,比如我搭建了6个节点,--cluster-replicas设置为1时,则其中三个作为主节点,三个作为从节点。如果设置为0则代表6点节点都是主节点。
+相当于指定随从节点有几个,比如我搭建了6个节点,--cluster-replicas设置为1时,则其中三个作为主节点,三个作为从节点。如果设置为0则代表6点节点都是主节点。
 
 # 参考
 
