@@ -245,5 +245,6 @@ $RECYCLE.BIN/
 
 # 本项目
 data
-!/nas/nastools/config/media.db
-!/nas/nastools/config/user.db
+/nas/nastools/config/media.db
+/nas/nastools/config/user.db
+
