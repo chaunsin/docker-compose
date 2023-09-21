@@ -1,0 +1,57 @@
+version: '3.2'
+services:
+  elasticsearch:
+    image: ${ES_IMAGES}
+    restart: always
+    privileged: true
+    networks:
+      - elastic
+    ports:
+      # api地址端口
+      - ${ES_PORT}:9200
+      # 集群之间通讯端口
+      - "9300:9300"
+    environment:
+      - ELASTIC_PASSWORD=${ES_PASSWORD}
+      # jvm堆得大小为512mb
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - discovery.type=single-node
+    volumes:
+      - ./elastic/data:/usr/share/elasticsearch/data
+#      - ./elastic/config:/usr/share/elasticsearch/config
+#      - ./elastic/config/certs:/usr/share/elasticsearch/config/certs
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
+  kibana:
+    image: ${KIBANA_IMAGES}
+    restart: always
+    privileged: true
+    networks:
+      - elastic
+    ports:
+      - ${KIBANA_PORT}:5601
+    volumes:
+      - ./kibana/data:/usr/share/kibana/data
+    # - ./kibana/config/certs:/usr/share/kibana/config/certs
+    # - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    environment:
+      - ELASTICSEARCH_HOST=http://elasticsearch:${ES_PORT}
+      - KIBANA_PASSWORD=${KIBANA_PASSWORD}
+      # 配置成中文显示方式
+      - I18N_LOCALE=zh-CN
+    depends_on:
+      - elasticsearch
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
+networks:
+  elastic:
