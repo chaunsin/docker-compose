@@ -1,0 +1,57 @@
+version: '3.2'
+services:
+  keycloak:
+    image: ${KC_IMAGES}
+    restart: always
+    privileged: true
+    networks:
+      - keycloak
+    ports:
+      - ${KC_PORT}:8080
+    environment:
+      - KEYCLOAK_ADMIN=${KC_USERNAME}
+      - KEYCLOAK_ADMIN_PASSWORD=${KC_PASSWORD}
+      - KC_DB=${KC_DB}
+      - KC_DB_URL=${KC_DB_URL}
+      - KC_DB_PASSWORD=${KC_DB_PASSWORD}
+      - KC_DB_USERNAME=${KC_DB_USERNAME}
+    #      - KC_HOSTNAME={$KC_HOSTNAME}
+    #      - KC_HTTPS_KEY_STORE_FILE=${KC_HTTPS_KEY_STORE_FILE}
+    #      - KC_HTTPS_KEY_STORE_PASSWORD=${KC_HTTPS_KEY_STORE_PASSWORD}
+    #      - KC_FEATURES=${KC_FEATURES}
+    volumes:
+      - ./data/import:/opt/keycloak/data/import
+    command: start-dev
+    depends_on:
+      - mysql
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
+  mysql:
+    image: ${DB_IMAGES}
+    restart: always
+    privileged: true
+    networks:
+      - keycloak
+    ports:
+      - ${DB_PORT}:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - "./mysql/data:/var/lib/mysql"
+      - "./mysql/conf/my.cnf:/etc/my.cnf"
+      # 数据库还原目录 可将需要还原的sql文件放在这里
+      - "./mysql/init:/docker-entrypoint-initdb.d/"
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
+networks:
+  keycloak:

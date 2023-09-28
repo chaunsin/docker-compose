@@ -12,8 +12,6 @@ services:
         mode: host
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: jcx
-      MYSQL_PASS: root
     volumes:
       - "./data:/var/lib/mysql"
       - "./conf/my.cnf:/etc/my.cnf"

@@ -12,9 +12,6 @@ services:
         mode: host
     environment:
       MYSQL_ROOT_PASSWORD: root
-      # 此账号需要授权可以远程访问,不然会出现 Access denied for user 'admin'@'xx.xx.xx.xx' (using password: YES)
-      MYSQL_USER: admin
-      MYSQL_PASS: root
     volumes:
       - "./data:/var/lib/mysql"
       - "./conf/my.cnf:/etc/my.cnf"
