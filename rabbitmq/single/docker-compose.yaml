@@ -2,6 +2,11 @@ version: '3.2'
 services:
   rabbitmq:
     image: ${IMAGES}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+#    volumes:
+#      - "/etc/rabbitmq/conf.d/10-defaults.conf:./config/default.conf"
     logging:
       driver: "json-file"
       options:
