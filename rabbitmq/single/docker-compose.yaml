@@ -5,8 +5,9 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-#    volumes:
-#      - "/etc/rabbitmq/conf.d/10-defaults.conf:./config/default.conf"
+    volumes:
+      - "./data:/var/lib/rabbitmq"
+    #- "/etc/rabbitmq/conf.d/10-defaults.conf:./config/rabbitmq.conf"
     logging:
       driver: "json-file"
       options:
