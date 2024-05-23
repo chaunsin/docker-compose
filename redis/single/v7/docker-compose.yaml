@@ -25,7 +25,7 @@ services:
 
 #  # redis命令行,可以酌情使用,其实可以不用在启动一个服务,在执行命令行时直接进入到redis-server执行cli是一样的
 #  redis-cli:
-#    image: redis:6.2.7-alpine3.16
+#    image: ${IMAGE}
 #    restart: "always"
 #    container_name: redis-cli
 #    command: /bin/sh -c 'redis-cli -h redis-server -p 6379 ping; while true; do sleep 20221011; done'
