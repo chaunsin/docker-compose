@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   zoo1:
-    image: confluentinc/cp-zookeeper:6.2.1
+    image: ${IMAGE_ZOOKEEPER}
     hostname: zoo1
     container_name: zoo1
     ports:
@@ -29,7 +29,7 @@ services:
         max-file: "3"
 
   kafka1:
-    image: confluentinc/cp-kafka:6.2.1
+    image: ${IMAGE_KAFKA}
     hostname: kafka1
     ports:
       - "9092:9092"
@@ -55,7 +55,7 @@ services:
         max-file: "3"
 
   kafka2:
-    image: confluentinc/cp-kafka:6.2.1
+    image: ${IMAGE_KAFKA}
     hostname: kafka2
     ports:
       - "9093:9093"
@@ -81,7 +81,7 @@ services:
         max-file: "3"
 
   kafka3:
-    image: confluentinc/cp-kafka:6.2.1
+    image: ${IMAGE_KAFKA}
     hostname: kafka3
     ports:
       - "9094:9094"
