@@ -12,7 +12,7 @@ services:
     volumes:
       - ./redis.conf:/etc/redis/redis.conf
       - ./data:/data
-    command: redis-server /etc/redis/redis.conf
+    command: redis-server /etc/redis/redis.conf --requirepass ${PASSWORD}
     # 使用该参数container内的root拥有真正的root权限。否则，container内的root只是外部的一个普通用户权限
     privileged: true
     logging:
