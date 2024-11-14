@@ -1,0 +1,17 @@
+services:
+  web:
+    image: ${IMAGE}
+    volumes:
+      - ./data:/ql/data
+    ports:
+      - "${PORT}:5700"
+    environment:
+      QlBaseUrl: '/' # 部署路径非必须，以斜杠开头和结尾，比如 /test/
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"

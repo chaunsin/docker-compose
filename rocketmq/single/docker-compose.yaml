@@ -1,7 +1,6 @@
-version: '3.2'
 services:
   rocketmq:
-    image: rocketmq
+    image: ${IMAGE}
     logging:
       driver: "json-file"
       options:

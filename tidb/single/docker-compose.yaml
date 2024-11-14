@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   tidb:
-    image: tidb
+    image: ${IMAGE}
     logging:
       driver: "json-file"
       options:
