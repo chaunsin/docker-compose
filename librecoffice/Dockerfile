@@ -1,22 +1,31 @@
 # syntax = docker/dockerfile:1
-FROM debian:stable-slim AS builder
+FROM alpine:3.21 AS builder
 
-ENV DEBIAN_FRONTEND=noninteractive
+#ENV DEBIAN_FRONTEND=noninteractive
 
 # 使用国内源，加快下载速度
-RUN echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian stable main contrib non-free" > /etc/apt/sources.list && \
-    echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian-security stable-security main contrib non-free" >> /etc/apt/sources.list
+# RUN echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian stable main contrib non-free" > /etc/apt/sources.list && \
+#    echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian-security stable-security main contrib non-free" >> /etc/apt/sources.list
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 
 # 更新并安装 LibreOffice 和所需语言包
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+#RUN apt-get update && \
+#    apt-get install -y --no-install-recommends \
+#        curl \
+#        libreoffice \
+#        tzdata \
+#        python3-pip && \
+#    ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/*
+RUN apk update && \
+    apk add --no-cache \
         curl \
         libreoffice \
         tzdata \
-        python3-pip && \
+        py3-pip && \
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
 ## 安装语言包
 #RUN for LOCALE in $(curl -sL https://raw.githubusercontent.com/thelamer/lang-stash/master/langs); do \
@@ -25,13 +34,25 @@ RUN apt-get update && \
 #    apt-get clean && \
 #    rm -rf /var/lib/apt/lists/*
 
+# 安装字体
+# alpine: https://wiki.alpinelinux.org/wiki/Fonts
+# debign: https://wiki.debian.org/Fonts
+RUN apk add --no-cache \
+    font-noto font-noto-cjk font-noto-extra \
+    terminus-font \
+    ttf-font-awesome \
+    ttf-dejavu \
+    ttf-freefont \
+    ttf-hack \
+    ttf-inconsolata \
+    ttf-liberation \
+    ttf-mononoki  \
+    ttf-opensans   \
+    fontconfig && \
+    fc-cache -f
+
 # 安装unoconvert.go
 # https://github.com/unoconv/unoserver#installation
-#RUN curl -k -L -o find_uno.py https://gist.githubusercontent.com/regebro/036da022dc7d5241a0ee97efdf1458eb/raw/find_uno.py && \
-#   python3 find_uno.py
-#RUN curl -k -L https://bootstrap.pypa.io/get-pip.py && \
-#    python3 get-pip.py && \
-#    python3 -m pip install unoserver
 RUN pip3 install --no-cache unoserver==3.0.1 --break-system-packages
 
 # 验证 LibreOffice 和 unoconvert 版本
