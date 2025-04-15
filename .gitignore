@@ -248,3 +248,4 @@ data
 /nas/nastools/config/media.db
 /nas/nastools/config/user.db
 
+/mysql/single/v80/init/
