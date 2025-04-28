@@ -2,6 +2,10 @@
 
 提供了一些docker-compose服务,便于开发快速启动服务.
 
+# clookiecloud
+
+- [x] latest
+
 # es
 
 ### single

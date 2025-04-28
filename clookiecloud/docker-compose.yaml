@@ -1,0 +1,16 @@
+services:
+  rabbitmq:
+    image: ${IMAGES}
+    container_name: cookiecloud-app
+    restart: always
+    volumes:
+      - ./data:/data/api/data
+    ports:
+      - "8088:8088"
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
