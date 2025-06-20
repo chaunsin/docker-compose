@@ -2,86 +2,18 @@
 
 提供了一些docker-compose服务,便于开发快速启动服务.
 
-# clookiecloud
+# 支持列表
 
-- [x] latest
+| 应用名称         | 单节点版本       | 集群模式  | 分片版本 | 哨兵版本 | 备注                  |
+|--------------|-------------|-------|------|------|---------------------|
+| redis        | 6           | 6.2.7 |      |      | 单节点5.0 6.0 存疑待验证可行性 |
+| mysql        | 5.6,5.7,8.0 |       |      |      | 5.6 5.7 存疑待验证可行性    |
+| rabbitmq     | 3.12        |       |      |      |                     |
+| es           | 8.10.1      |       |      |      |                     |
+| kafka        | 6.2.1       |       |      |      |                     |
+| clookiecloud | latest      |       |      |      |                     |
+| keycloak     | 22.0.3      |       |      |      |                     |
+| qinglong     | latest      |       |      |      |                     |
+| librecoffice | 未知          |       |      |      |                     |
+| n8n          | latest      |       |      |      | 社区版本                |
 
-# es
-
-### single
-
-- [x] 8.10.1
-
-### cluster
-
-暂无
-
-# kafka
-
-### single
-
-- [x] 6.2.1
-
-### cluster
-
-暂无
-
-# keycloak
-
-### single
-
-- [x] 22.0.3
-
-# mysql
-
-### single
-
-- [ ] v5.6 存疑待验证可行性
-- [ ] v5.7 存疑待验证可行性
-- [x] v8.0
-
-### cluster
-
-暂无
-
-### sharding
-
-暂无
-
-# rabbitmq
-
-### single
-
-- [x] v3.12
-
-# qinglong
-
-- version: latest
-
-# redis
-
-### single
-
-- [ ] v5
-- [x] v6
-- [ ] v7.0
-
-### cluster
-
-- [ ] v5
-- [x] v6.2.7
-- [ ] v7
-
-### sentry
-
-# rocketmq
-
-### single
-
-暂无
-
-# tidb
-
-### single
-
-暂无

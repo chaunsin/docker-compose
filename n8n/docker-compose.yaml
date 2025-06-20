@@ -1,0 +1,16 @@
+services:
+  rabbitmq:
+    image: ${IMAGES}
+    container_name: n8n
+    restart: always
+    volumes:
+      - ./data:/home/node/.n8n
+    ports:
+      - "5678:5678"
+    logging:
+      driver: "json-file"
+      options:
+        # 日志文件大小
+        max-size: "200m"
+        # 最大日志文件数量
+        max-file: "3"
