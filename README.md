@@ -16,4 +16,5 @@
 | qinglong     | latest      |       |      |      |                     |
 | librecoffice | 未知          |       |      |      |                     |
 | n8n          | latest      |       |      |      | 社区版本                |
+| metabase     | latest      |       |      |      | 社区免费版               |
 
